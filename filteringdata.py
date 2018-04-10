@@ -1,5 +1,6 @@
 from math import sqrt
 import sys
+import numpy as np
 
 users = {"Angelica": {"Blues Traveler": 3.5, "Broken Bells": 2.0, "Norah Jones":4.5, "Phoenix": 5.0, "Slightly Stoopid": 1.5, "The Strokes": 2.5, "Vampire Weekend": 2.0},
          "Bill":     {"Blues Traveler": 2.0, "Broken Bells": 3.5, "Deadmau5": 4.0, "Phoenix": 2.0, "Slightly Stoopid": 3.5, "Vampire Weekend": 3.0},
@@ -54,6 +55,10 @@ def recommend(username, users):
             recommendations.append((filmname, rating))
     return sorted(recommendations, key=lambda entry: entry[1], reverse=True)
 
+def cosine_similarity(rating1, rating2):
+    denominator = np.sqrt(np.sum(np.square(rating1))) * np.sqrt(np.sum(np.square(rating2)))
+    nominator = np.sum(x*y for (x,y) in zip(rating1, rating2))
+    return nominator / denominator
 
 # Test
 print(compute_manhattan_distance(users["Dan"], users["Hailey"]))
@@ -61,3 +66,5 @@ print(compute_euclidean_distance(users["Dan"], users["Hailey"]))
 print(compute_user_distance("Dan", users))
 print(compute_nearest_neighbor("Dan", users))
 print(recommend("Dan", users))
+
+print(cosine_similarity([1,2,3], [4,5,6]))
