@@ -57,6 +57,7 @@ def recommend(username, users):
 
 # Test
 print(compute_manhattan_distance(users["Dan"], users["Hailey"]))
+print(compute_euclidean_distance(users["Dan"], users["Hailey"]))
 print(compute_user_distance("Dan", users))
 print(compute_nearest_neighbor("Dan", users))
 print(recommend("Dan", users))
