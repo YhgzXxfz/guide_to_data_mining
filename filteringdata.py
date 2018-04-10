@@ -60,6 +60,12 @@ def cosine_similarity(rating1, rating2):
     nominator = np.sum(x*y for (x,y) in zip(rating1, rating2))
     return nominator / denominator
 
+def pearson_correlation_coefficient(rating1, rating2):
+    x_mean, y_mean = np.mean(rating1), np.mean(rating2)
+    nominator = np.sum((x-x_mean)*(y-y_mean) for (x,y) in zip(rating1, rating2))
+    denominator = np.sqrt(np.sum(np.square(rating1-x_mean))) * np.sqrt(np.sum(np.square(rating2-y_mean)))
+    return nominator, denominator, nominator / denominator
+
 # Test
 print(compute_manhattan_distance(users["Dan"], users["Hailey"]))
 print(compute_euclidean_distance(users["Dan"], users["Hailey"]))
@@ -68,3 +74,4 @@ print(compute_nearest_neighbor("Dan", users))
 print(recommend("Dan", users))
 
 print(cosine_similarity([1,2,3], [4,5,6]))
+print(pearson_correlation_coefficient([1,2,3], [4,5,6]))
