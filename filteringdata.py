@@ -17,7 +17,7 @@ def compute_manhattan_distance(rating1, rating2):
 def compute_euclidean_distance(rating1, rating2):
     return compute_minkowski_distance(rating1, rating2, 2)
 
-def compute_minkowski_distance(rating1, rating2, r = 2):
+def compute_minkowski_distance(rating1, rating2, r=2):
     dist = 0.0
     has_common_rating = False
     for key in rating1:
@@ -66,6 +66,10 @@ def pearson_correlation_coefficient(rating1, rating2):
     denominator = np.sqrt(np.sum(np.square(rating1-x_mean))) * np.sqrt(np.sum(np.square(rating2-y_mean)))
     return nominator, denominator, nominator / denominator
 
+def k_nearest_neighbors(username, users, k=1):
+    distances = compute_user_distance(username, users)
+    return sorted(distances, key=lambda entry: entry[1])[:k]
+
 # Test
 print(compute_manhattan_distance(users["Dan"], users["Hailey"]))
 print(compute_euclidean_distance(users["Dan"], users["Hailey"]))
@@ -75,3 +79,4 @@ print(recommend("Dan", users))
 
 print(cosine_similarity([1,2,3], [4,5,6]))
 print(pearson_correlation_coefficient([1,2,3], [4,5,6]))
+print(k_nearest_neighbors("Dan", users, 10))
