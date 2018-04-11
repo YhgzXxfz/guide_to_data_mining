@@ -70,6 +70,23 @@ def k_nearest_neighbors(username, users, k=1):
     distances = compute_user_distance(username, users)
     return sorted(distances, key=lambda entry: entry[1])[:k]
 
+def recommend_by_k_nearest_neighbor(username, users, k=1):
+    distances = compute_user_distance(username, users)
+    recommendations = {}
+    total_dist = 0.0
+    for i in range(k):
+        total_dist = total_dist + distances[i][1]
+    for i in range(k):
+        user, score = distances[i][0], distances[i][1]
+        rectified_score = score/total_dist
+        for film in users[user]:
+            if not film in users[username]:
+                if film not in recommendations:
+                    recommendations[film] = rectified_score
+                else:
+                    recommendations[film] += rectified_score
+    return recommendations
+
 # Test
 print(compute_manhattan_distance(users["Dan"], users["Hailey"]))
 print(compute_euclidean_distance(users["Dan"], users["Hailey"]))
@@ -80,3 +97,4 @@ print(recommend("Dan", users))
 print(cosine_similarity([1,2,3], [4,5,6]))
 print(pearson_correlation_coefficient([1,2,3], [4,5,6]))
 print(k_nearest_neighbors("Dan", users, 10))
+print(recommend_by_k_nearest_neighbor("Dan", users, 5))
